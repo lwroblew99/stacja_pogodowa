@@ -16,6 +16,7 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -31,6 +32,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled true
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -53,4 +55,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-database-ktx'
     implementation 'com.firebaseui:firebase-ui-database:7.2.0'
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+
 }
