@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Stacja</string>
+    <string name="app_name">Stacja pogodowa</string>
     <string name="temperatura">Temperatura:</string>
     <string name="cisnienie">Cisnienie:</string>
     <string name="sunrise">sunrise</string>
