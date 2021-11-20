@@ -19,22 +19,50 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="25dp">
 
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-thin"
+            android:text="Czwartek 4.11.2021"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="20:02 "
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/data" />
+
+
         <LinearLayout
             android:id="@+id/detailsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="vertical">
+
             <LinearLayout
                 android:id="@+id/overviewContainer"
-                android:orientation="vertical"
-                android:layout_centerInParent="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -311,6 +339,7 @@
                     android:layout_height="wrap_content"></Space>
 
             </LinearLayout>
+
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="10dp"></Space>
@@ -458,12 +487,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ProgressBar
                 android:id="@+id/loader"
-                android:layout_centerInParent="true"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone">
 
             </ProgressBar>
 
@@ -482,31 +512,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
-    <TextView
-        android:id="@+id/data"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Czwartek 4.11.2021"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:layout_gravity="center"
-        android:fontFamily="sans-serif-thin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="20:02 "
-        android:textSize="30sp"
-        android:layout_gravity="center"
-        android:fontFamily="sans-serif-thin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/data" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             var response: String?
             try {
                 response =
-                    URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=metric&appid=$API")
+                    URL("http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=538641b64c380fbc31725377e486d0c1")
                         .readText(Charsets.UTF_8)
             } catch (e: Exception) {
                 response = null
@@ -110,13 +110,20 @@ class MainActivity : AppCompatActivity() {
                 val wind = jsonObj.getJSONObject("wind")
                 val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
                 val updatedAt: Long = jsonObj.getLong("dt")
-                val updatedAtText =
-                    "Updated at: " + SimpleDateFormat(
-                        "dd/MM/yyyy hh:mm a",
+                val updatedAtDate =
+                    SimpleDateFormat(
+                        "dd/MM/yyyy",
                         Locale.ENGLISH
                     ).format(
                         Date(updatedAt * 1000)
                     )
+                val updatedAtHour =
+                    SimpleDateFormat(
+                    "hh:mm a",
+                    Locale.ENGLISH
+                ).format(
+                    Date(updatedAt * 1000)
+                )
                 val temp = main.getString("temp") + "°C"
                 val tempMin = main.getString("temp_min") + "°C"
                 val tempMax = main.getString("temp_max") + "°C"
@@ -132,6 +139,8 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.pressure).text = pressure
                 findViewById<TextView>(R.id.humidity).text = humidity
                 findViewById<TextView>(R.id.wind).text = windspeed
+                findViewById<TextView>(R.id.data).text = updatedAtDate
+                findViewById<TextView>(R.id.time).text = updatedAtHour
                 findViewById<TextView>(R.id.sunrise).text =
                     SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(
                         Date(sunrise * 1000)
