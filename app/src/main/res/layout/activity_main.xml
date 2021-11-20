@@ -11,7 +11,7 @@
     >
 
     <LinearLayout
-        android:id="@+id/po"
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -211,7 +211,7 @@
                     </TextView>
 
                     <TextView
-                        android:id="@+id/Wind"
+                        android:id="@+id/wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" "
@@ -476,6 +476,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="something went wrong"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -506,14 +507,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/data" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="116dp"
-        tools:layout_editor_absoluteY="206dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

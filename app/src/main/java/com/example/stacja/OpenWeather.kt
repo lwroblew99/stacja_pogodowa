@@ -17,7 +17,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
 
-
+/*
 class OpenWeather : Fragment() {
     //private lateinit var database: DatabaseReference
     //private lateinit var firebaseDatabase: FirebaseDatabase
@@ -121,4 +121,4 @@ class OpenWeather : Fragment() {
 
             }
 
-        }
+        } */

@@ -27,9 +27,8 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
 
-
+//https://home.openweathermap.org/api_keys
 class MainActivity : AppCompatActivity() {
-
 
 
     //private lateinit var database: DatabaseReference
@@ -38,15 +37,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvCisnienie: TextView
     private lateinit var tvDate: TextView
     private lateinit var tvTime: TextView
-    var CITY: String = "Poznan"
+    var CITY: String = "Sopot"
     val API: String = "538641b64c380fbc31725377e486d0c1"
     val localDateNow = LocalDate.now()
     val localTimeNow = LocalTime.now()
 
 
-
-
-        override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -58,7 +55,9 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        val database =  Firebase.database("https://weather-from-arduino-default-rtdb.europe-west1.firebasedatabase.app")
+
+        val database =
+            Firebase.database("https://weather-from-arduino-default-rtdb.europe-west1.firebasedatabase.app")
         val myRef = database.getReference()
 
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -72,18 +71,91 @@ class MainActivity : AppCompatActivity() {
                 tvTemperature.setText(Temperatura)
 
             }
+
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
             }
         })
 
+        weather().execute()
+
+    }
+
+    inner class weather() : AsyncTask<String, Void, String>() {
+        override fun onPreExecute() {
+            super.onPreExecute()
+            findViewById<ProgressBar>(R.id.loader).visibility = View.VISIBLE
+            findViewById<TextView>(R.id.errortext).visibility = View.GONE
+            findViewById<LinearLayout>(R.id.main).visibility = View.GONE
+        }
+
+        override fun doInBackground(vararg p0: String?): String? {
+            var response: String?
+            try {
+                response =
+                    URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=metric&appid=$API")
+                        .readText(Charsets.UTF_8)
+            } catch (e: Exception) {
+                response = null
             }
+            return response
+        }
 
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            try {
+                val jsonObj = JSONObject(result)
+                val main = jsonObj.getJSONObject("main")
+                val sys = jsonObj.getJSONObject("sys")
+                val wind = jsonObj.getJSONObject("wind")
+                val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
+                val updatedAt: Long = jsonObj.getLong("dt")
+                val updatedAtText =
+                    "Updated at: " + SimpleDateFormat(
+                        "dd/MM/yyyy hh:mm a",
+                        Locale.ENGLISH
+                    ).format(
+                        Date(updatedAt * 1000)
+                    )
+                val temp = main.getString("temp") + "°C"
+                val tempMin = main.getString("temp_min") + "°C"
+                val tempMax = main.getString("temp_max") + "°C"
+                val pressure = main.getString("pressure")
+                val humidity = main.getString("humidity")
+                val sunrise: Long = sys.getLong("sunrise")
+                val sunset: Long = sys.getLong("sunset")
+                val weatherDescription = weather.getString("description")
+                val windspeed = wind.getString("speed")
+                val address = jsonObj.getString("name") + ", " + sys.getString("country")
 
+                findViewById<TextView>(R.id.temp_outside).text = temp
+                findViewById<TextView>(R.id.pressure).text = pressure
+                findViewById<TextView>(R.id.humidity).text = humidity
+                findViewById<TextView>(R.id.wind).text = windspeed
+                findViewById<TextView>(R.id.sunrise).text =
+                    SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(
+                        Date(sunrise * 1000)
+                    )
+                findViewById<TextView>(R.id.sunset).text =
+                    SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(
+                        Date(sunset * 1000)
+                    )
+                findViewById<TextView>(R.id.mintemp).text = tempMin
 
+                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
+                findViewById<LinearLayout>(R.id.main).visibility = View.VISIBLE
+                findViewById<TextView>(R.id.errortext).visibility = View.GONE
 
+            } catch (e: Exception) {
+
+                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
+                findViewById<LinearLayout>(R.id.main).visibility = View.GONE
+                findViewById<TextView>(R.id.errortext).visibility = View.VISIBLE
+
+            }
+        }
+    }
 }
-
 
 
 
