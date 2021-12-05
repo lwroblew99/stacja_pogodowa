@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             Firebase.database("https://weather-from-arduino-default-rtdb.europe-west1.firebasedatabase.app")
         val myRef = database.getReference()
 
-        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        myRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
@@ -84,16 +84,16 @@ class MainActivity : AppCompatActivity() {
     inner class weather() : AsyncTask<String, Void, String>() {
         override fun onPreExecute() {
             super.onPreExecute()
-            findViewById<ProgressBar>(R.id.loader).visibility = View.VISIBLE
-            findViewById<TextView>(R.id.errortext).visibility = View.GONE
-            findViewById<LinearLayout>(R.id.main).visibility = View.GONE
+          //  findViewById<ProgressBar>(R.id.loader).visibility = View.VISIBLE
+           // findViewById<TextView>(R.id.errortext).visibility = View.GONE
+           // findViewById<LinearLayout>(R.id.main).visibility = View.GONE
         }
 
         override fun doInBackground(vararg p0: String?): String? {
             var response: String?
             try {
                 response =
-                    URL("http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=538641b64c380fbc31725377e486d0c1")
+                    URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=metric&appid=$API")
                         .readText(Charsets.UTF_8)
             } catch (e: Exception) {
                 response = null
@@ -151,15 +151,15 @@ class MainActivity : AppCompatActivity() {
                     )
                 findViewById<TextView>(R.id.mintemp).text = tempMin
 
-                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-                findViewById<LinearLayout>(R.id.main).visibility = View.VISIBLE
-                findViewById<TextView>(R.id.errortext).visibility = View.GONE
+               // findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
+               // findViewById<LinearLayout>(R.id.main).visibility = View.VISIBLE
+               // findViewById<TextView>(R.id.errortext).visibility = View.GONE
 
             } catch (e: Exception) {
 
-                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
-                findViewById<LinearLayout>(R.id.main).visibility = View.GONE
-                findViewById<TextView>(R.id.errortext).visibility = View.VISIBLE
+               // findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
+               // findViewById<LinearLayout>(R.id.main).visibility = View.GONE
+               // findViewById<TextView>(R.id.errortext).visibility = View.VISIBLE
 
             }
         }
