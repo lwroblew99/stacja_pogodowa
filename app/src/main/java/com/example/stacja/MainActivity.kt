@@ -62,13 +62,13 @@ class MainActivity : AppCompatActivity() {
             Firebase.database("https://pogodynka-979e7-default-rtdb.europe-west1.firebasedatabase.app")
         val myRef = database.getReference()
 
-        myRef.addValueEventListener(object : ValueEventListener {
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-                val Cisnienie: String = dataSnapshot.child("Cisnienie").getValue().toString()
-                val Temperatura: String = dataSnapshot.child("Temperatura").getValue().toString()
+                val Cisnienie: String = dataSnapshot.child("Weather1").child("Cisnienie").value.toString()
+                val Temperatura: String = dataSnapshot.child("Weather1").child("Temperatura").value.toString()
                 tvCisnienie.setText(Cisnienie)
                 tvTemperature.setText(Temperatura)
 
@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
                 val address = jsonObj.getString("name") + ", " + sys.getString("country")
 
                 findViewById<TextView>(R.id.temp_outside).text = temp
-                findViewById<TextView>(R.id.pressure).text = pressure
+                //findViewById<TextView>(R.id.pressure).text = pressure
                 findViewById<TextView>(R.id.humidity).text = humidity
                 findViewById<TextView>(R.id.wind).text = windspeed
                 findViewById<TextView>(R.id.data).text = updatedAtDate
