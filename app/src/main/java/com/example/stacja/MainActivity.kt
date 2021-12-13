@@ -93,55 +93,46 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        checkLocationPermission()
+        findViewById<Button>(R.id.bgetlocation).setOnClickListener{
+            checkLocationPermission()
+        }
 
         weather().execute()
 
     }
 
-    private fun getLastLocation(){
-        if(checkLocationPermission()){
-            if(isLocationEnabled()){
-                fusedLocationProviderClient.lastLocation.addOnCompleteListener{task ->
-                    var location:Location? = task.result
-                    if(location == null){
-                        getLastLocation()
-                    }
-                }
-            }
-        }
-    }
-    private fun checkLocationPermission():Boolean {
-       // val task = fusedLocationProviderClient.lastLocation
+    private fun checkLocationPermission(){
+        val task = fusedLocationProviderClient.lastLocation
 
-        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-            ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
         )
         {
-           return true
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),101)
+            return
 
         }
-        return false
+        task.addOnSuccessListener {
+            if(it != null){
+                Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
     }
-    fun RequestPermission(){
+    /*fun RequestPermission(){
         ActivityCompat.requestPermissions(
             this,
             arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION),
             PERMISSION_ID
         )
-    }
+    }*/
 
     private fun isLocationEnabled():Boolean{
         var locationManager = getSystemService(Context.LOCATION_SERVICE)as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
-    }
-
-    private fun getCityName(lat:Double,long:Double):String{
-        var CITY = ""
-        var geoCoder = Geocoder(this, Locale.getDefault())
-        var Adres = geoCoder.getFromLocation(lat,long,1)
-        CITY = Adres.get(0).locality
-        return CITY
     }
 
     inner class weather() : AsyncTask<String, Void, String>() {
