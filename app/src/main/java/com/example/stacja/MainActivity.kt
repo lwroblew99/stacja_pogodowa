@@ -36,6 +36,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
 import java.util.jar.Manifest
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 //https://home.openweathermap.org/api_keys
 class MainActivity : AppCompatActivity() {
@@ -48,8 +49,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvDate: TextView
     private lateinit var tvTime: TextView
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
-    var city: String = "Poznan"
+    var city: String = "Sopot"
     val API: String = "538641b64c380fbc31725377e486d0c1"
     val useruid: String ="X3hgaV4OrMfYSMh0HjkWEkncAN13"
     val webApi:String = "AIzaSyBUNk2SUBSJx78jNwUUKikIUP8udhFBYj0"
@@ -63,17 +65,28 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        swipeRefreshLayout = findViewById(R.id.swiperefresh)
         tvCisnienie = findViewById(R.id.pressure)
         tvTemperature = findViewById(R.id.temp_inside)
 
+        swipeRefreshLayout.setOnRefreshListener {
+
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+
+            findViewById<Button>(R.id.bgetlocation).setOnClickListener {
+                checkLocationPermission()
+            }
+            firebasedatabase()
+            weather().execute()
+            swipeRefreshLayout.setRefreshing(false)
+
+        }
+
+    }
 
 
-        findViewById<TextView>(R.id.time).text = formated.toString()
 
-
-
-
-
+    fun firebasedatabase(){
         val database =
             Firebase.database("https://pogodynka-979e7-default-rtdb.europe-west1.firebasedatabase.app")
         val myRef = database.getReference()
@@ -83,8 +96,10 @@ class MainActivity : AppCompatActivity() {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
 
-                val Cisnienie: String = dataSnapshot.child("Weather1").child("Cisnienie").value.toString()
-                val Temperatura: String = dataSnapshot.child("Weather1").child("Temperatura").value.toString()
+                val Cisnienie: String =
+                    dataSnapshot.child("Weather1").child("Cisnienie").value.toString()
+                val Temperatura: String =
+                    dataSnapshot.child("Weather1").child("Temperatura").value.toString()
                 tvCisnienie.setText(Cisnienie)
                 tvTemperature.setText(Temperatura)
 
@@ -94,15 +109,6 @@ class MainActivity : AppCompatActivity() {
                 // Failed to read value
             }
         })
-
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-
-        findViewById<Button>(R.id.bgetlocation).setOnClickListener{
-            checkLocationPermission()
-        }
-
-        weather().execute()
-
     }
 
     private fun checkLocationPermission(){
@@ -194,6 +200,7 @@ class MainActivity : AppCompatActivity() {
                 val address = jsonObj.getString("name")
                 //+ ", " + sys.getString("country")
 
+                findViewById<TextView>(R.id.time).text = formated.toString()
                 findViewById<TextView>(R.id.TCity).text = address
                 findViewById<TextView>(R.id.temp_outside).text = temp
                 //findViewById<TextView>(R.id.pressure).text = pressure

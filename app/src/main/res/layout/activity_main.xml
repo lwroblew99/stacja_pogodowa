@@ -9,6 +9,11 @@
     android:padding="25dp"
 
     >
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/main"
@@ -534,5 +539,5 @@
         tools:layout_editor_absoluteX="53dp"
         tools:layout_editor_absoluteY="53dp" />
 
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
