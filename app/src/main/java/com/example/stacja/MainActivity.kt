@@ -1,5 +1,6 @@
 package com.example.stacja
-
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
@@ -52,8 +53,9 @@ class MainActivity : AppCompatActivity() {
     val API: String = "538641b64c380fbc31725377e486d0c1"
     val useruid: String ="X3hgaV4OrMfYSMh0HjkWEkncAN13"
     val webApi:String = "AIzaSyBUNk2SUBSJx78jNwUUKikIUP8udhFBYj0"
-    val localDateNow = LocalDate.now()
-    val localTimeNow = LocalTime.now()
+    val currentTime = LocalDateTime.now()
+    val formaterr = DateTimeFormatter.ofPattern("HH:mm")
+    val formated = currentTime.format(formaterr)
     var PERMISSION_ID = 1000
 
 
@@ -64,8 +66,10 @@ class MainActivity : AppCompatActivity() {
         tvCisnienie = findViewById(R.id.pressure)
         tvTemperature = findViewById(R.id.temp_inside)
 
-        tvDate = findViewById(R.id.data)
-        tvTime = findViewById(R.id.time)
+
+
+        findViewById<TextView>(R.id.time).text = formated.toString()
+
 
 
 
@@ -187,14 +191,16 @@ class MainActivity : AppCompatActivity() {
                 val sunset: Long = sys.getLong("sunset")
                 val weatherDescription = weather.getString("description")
                 val windspeed = wind.getString("speed")
-                val address = jsonObj.getString("name") + ", " + sys.getString("country")
+                val address = jsonObj.getString("name")
+                //+ ", " + sys.getString("country")
 
+                findViewById<TextView>(R.id.TCity).text = address
                 findViewById<TextView>(R.id.temp_outside).text = temp
                 //findViewById<TextView>(R.id.pressure).text = pressure
                 findViewById<TextView>(R.id.humidity).text = humidity
                 findViewById<TextView>(R.id.wind).text = windspeed
-                findViewById<TextView>(R.id.data).text = updatedAtDate
-                findViewById<TextView>(R.id.time).text = updatedAtHour
+                //findViewById<TextView>(R.id.data).text = updatedAtDate
+                //findViewById<TextView>(R.id.time).text = updatedAtHour
                 findViewById<TextView>(R.id.sunrise).text =
                     SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(
                         Date(sunrise * 1000)
