@@ -73,9 +73,9 @@ class MainActivity : AppCompatActivity() {
 
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-            findViewById<Button>(R.id.bgetlocation).setOnClickListener {
-                checkLocationPermission()
-            }
+           // findViewById<Button>(R.id.bgetlocation).setOnClickListener {
+             //   checkLocationPermission()
+            //}
             firebasedatabase()
             weather().execute()
             swipeRefreshLayout.setRefreshing(false)

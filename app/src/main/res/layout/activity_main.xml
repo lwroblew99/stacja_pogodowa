@@ -10,7 +10,6 @@
 
     >
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -63,6 +62,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/data" />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="193dp"
+            android:layout_height="215dp"
+            android:layout_gravity="center"
+            android:padding="5dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/ikona"
+
+            />
 
 
         <LinearLayout
@@ -531,13 +542,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></TextView>
 
-    <Button
-        android:id="@+id/bgetlocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location"
-        tools:layout_editor_absoluteX="53dp"
-        tools:layout_editor_absoluteY="53dp" />
+
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
