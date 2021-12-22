@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="sans-serif-thin"
-            android:text="Sopot"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="sans-serif-thin"
-            android:text="Czwartek 4.11.2021"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-thin"
-            android:text="20:02 "
+            android:text=""
             android:textColor="@color/black"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,14 +65,29 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="193dp"
-            android:layout_height="215dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:padding="5dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-            android:src="@drawable/ikona"
 
+
+            />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-thin"
+            android:text=""
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="15dp"
             />
 
 

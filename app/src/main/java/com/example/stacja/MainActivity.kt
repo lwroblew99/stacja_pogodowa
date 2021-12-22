@@ -4,6 +4,8 @@ import java.time.format.DateTimeFormatter
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.icu.number.NumberFormatter.with
+import android.icu.number.NumberRangeFormatter.with
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
@@ -19,7 +21,6 @@ import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.viewbinding.ViewBinding
-import com.example.stacja.databinding.ActivityMainBinding
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.database.DataSnapshot
@@ -37,6 +38,7 @@ import java.time.LocalTime
 import java.util.*
 import java.util.jar.Manifest
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.squareup.picasso.Picasso
 
 //https://home.openweathermap.org/api_keys
 class MainActivity : AppCompatActivity() {
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     val webApi:String = "AIzaSyBUNk2SUBSJx78jNwUUKikIUP8udhFBYj0"
     val currentTime = LocalDateTime.now()
     val formaterr = DateTimeFormatter.ofPattern("HH:mm")
+
     val formated = currentTime.format(formaterr)
     var PERMISSION_ID = 1000
 
@@ -141,7 +144,7 @@ class MainActivity : AppCompatActivity() {
     }*/
 
     private fun isLocationEnabled():Boolean{
-        var locationManager = getSystemService(Context.LOCATION_SERVICE)as LocationManager
+        var locationManager = getSystemService(LOCATION_SERVICE)as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
 
@@ -155,6 +158,7 @@ class MainActivity : AppCompatActivity() {
 
         override fun doInBackground(vararg p0: String?): String? {
             var response: String?
+            var image: String?
             try {
                 response =
                     URL("https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&appid=$API")
@@ -163,6 +167,8 @@ class MainActivity : AppCompatActivity() {
                 response = null
             }
             return response
+
+
         }
 
         override fun onPostExecute(result: String?) {
@@ -176,7 +182,7 @@ class MainActivity : AppCompatActivity() {
                 val updatedAt: Long = jsonObj.getLong("dt")
                 val updatedAtDate =
                     SimpleDateFormat(
-                        "dd/MM/yyyy",
+                        "dd.MM.yyyy",
                         Locale.ENGLISH
                     ).format(
                         Date(updatedAt * 1000)
@@ -198,15 +204,21 @@ class MainActivity : AppCompatActivity() {
                 val weatherDescription = weather.getString("description")
                 val windspeed = wind.getString("speed")
                 val address = jsonObj.getString("name")
+                val icon = weather.getString("icon")
                 //+ ", " + sys.getString("country")
 
+                val iconUrl = "http://openweathermap.org/img/w/"+icon+".png"
+                val imageView: ImageView = findViewById(R.id.image)
+
+                Picasso.get().load(iconUrl).into(imageView)
                 findViewById<TextView>(R.id.time).text = formated.toString()
                 findViewById<TextView>(R.id.TCity).text = address
                 findViewById<TextView>(R.id.temp_outside).text = temp
                 //findViewById<TextView>(R.id.pressure).text = pressure
                 findViewById<TextView>(R.id.humidity).text = humidity
                 findViewById<TextView>(R.id.wind).text = windspeed
-                //findViewById<TextView>(R.id.data).text = updatedAtDate
+                findViewById<TextView>(R.id.data).text = updatedAtDate
+                findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
                 //findViewById<TextView>(R.id.time).text = updatedAtHour
                 findViewById<TextView>(R.id.sunrise).text =
                     SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(
