@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -55,7 +56,12 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:7.2.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.11'
+    implementation 'com.github.bumptech.glide:glide:4.4.0'
+    kapt 'com.github.bumptech.glide:compiler:4.4.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation("io.coil-kt:coil:1.2.2")
+
 
     implementation 'com.squareup.picasso:picasso:2.71828'
 

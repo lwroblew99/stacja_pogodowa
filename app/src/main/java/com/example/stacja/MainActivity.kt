@@ -38,7 +38,10 @@ import java.time.LocalTime
 import java.util.*
 import java.util.jar.Manifest
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
+import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.module.AppGlideModule
 
 //https://home.openweathermap.org/api_keys
 class MainActivity : AppCompatActivity() {
@@ -53,14 +56,11 @@ class MainActivity : AppCompatActivity() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
-    var city: String = "Sopot"
+    var city: String = "Poznan"
     val API: String = "538641b64c380fbc31725377e486d0c1"
     val useruid: String ="X3hgaV4OrMfYSMh0HjkWEkncAN13"
     val webApi:String = "AIzaSyBUNk2SUBSJx78jNwUUKikIUP8udhFBYj0"
-    val currentTime = LocalDateTime.now()
-    val formaterr = DateTimeFormatter.ofPattern("HH:mm")
 
-    val formated = currentTime.format(formaterr)
     var PERMISSION_ID = 1000
 
 
@@ -205,12 +205,18 @@ class MainActivity : AppCompatActivity() {
                 val windspeed = wind.getString("speed")
                 val address = jsonObj.getString("name")
                 val icon = weather.getString("icon")
-                //+ ", " + sys.getString("country")
 
-                val iconUrl = "http://openweathermap.org/img/w/"+icon+".png"
+
+                val iconUrl = "https://openweathermap.org/img/w/"+icon+".png"
                 val imageView: ImageView = findViewById(R.id.image)
 
-                Picasso.get().load(iconUrl).into(imageView)
+
+                Picasso.get().load(iconUrl).error(R.drawable.ic_bolt).into(imageView)
+
+
+                val currentTime = LocalDateTime.now()
+                val formaterr = DateTimeFormatter.ofPattern("HH:mm")
+                val formated = currentTime.format(formaterr)
                 findViewById<TextView>(R.id.time).text = formated.toString()
                 findViewById<TextView>(R.id.TCity).text = address
                 findViewById<TextView>(R.id.temp_outside).text = temp
@@ -241,6 +247,7 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.errortext).visibility = View.VISIBLE
 
             }
+
         }
     }
 }
