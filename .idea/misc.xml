@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable-anydpi-v26/ic_launcher.xml" value="0.1712962962962963" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.16111111111111112" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable/gradient.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable/ic_baseline_brightness.xml" value="1.5678571428571428" />
@@ -12,6 +13,7 @@
         <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable/ic_bolt.xml" value="0.17407407407407408" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable/ic_cloud_rain.xml" value="0.221875" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable/ic_cloud_sun.xml" value="0.17407407407407408" />
+        <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable/ic_launcher.xml" value="0.1712962962962963" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable/ic_launcher_background.xml" value="0.16111111111111112" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.16111111111111112" />
         <entry key="..\:/Users/User/AndroidStudioProjects/Stacja/app/src/main/res/drawable/ic_snowflake.xml" value="0.17407407407407408" />

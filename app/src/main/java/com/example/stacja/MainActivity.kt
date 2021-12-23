@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
-    var city: String = "Poznan"
+    var city: String = "Sopot"
     val API: String = "538641b64c380fbc31725377e486d0c1"
     val useruid: String ="X3hgaV4OrMfYSMh0HjkWEkncAN13"
     val webApi:String = "AIzaSyBUNk2SUBSJx78jNwUUKikIUP8udhFBYj0"
@@ -211,7 +211,7 @@ class MainActivity : AppCompatActivity() {
                 val imageView: ImageView = findViewById(R.id.image)
 
 
-                Picasso.get().load(iconUrl).error(R.drawable.ic_bolt).into(imageView)
+                Picasso.get().load(iconUrl).into(imageView)
 
 
                 val currentTime = LocalDateTime.now()
