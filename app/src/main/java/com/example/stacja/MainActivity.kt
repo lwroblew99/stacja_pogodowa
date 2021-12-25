@@ -1,8 +1,10 @@
 package com.example.stacja
+import android.annotation.SuppressLint
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.number.NumberFormatter.with
 import android.icu.number.NumberRangeFormatter.with
@@ -53,8 +55,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvCisnienie: TextView
     private lateinit var tvDate: TextView
     private lateinit var tvTime: TextView
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
 
     var city: String = "Sopot"
     val API: String = "538641b64c380fbc31725377e486d0c1"
@@ -62,6 +65,10 @@ class MainActivity : AppCompatActivity() {
     val webApi:String = "AIzaSyBUNk2SUBSJx78jNwUUKikIUP8udhFBYj0"
 
     var PERMISSION_ID = 1000
+    //var lat=intent.getStringExtra("lat")
+    //var long=intent.getStringExtra("long")
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +86,7 @@ class MainActivity : AppCompatActivity() {
            // findViewById<Button>(R.id.bgetlocation).setOnClickListener {
              //   checkLocationPermission()
             //}
+            checkLocationPermission()
             firebasedatabase()
             weather().execute()
             swipeRefreshLayout.setRefreshing(false)
@@ -114,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun checkLocationPermission(){
+   private fun checkLocationPermission(){
         val task = fusedLocationProviderClient.lastLocation
 
         if(ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -129,7 +137,13 @@ class MainActivity : AppCompatActivity() {
         }
         task.addOnSuccessListener {
             if(it != null){
-                Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
+               //val lat = it.latitude.toString()
+               //val long = it.longitude.toString()
+               Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
+                //val intent= Intent(this,MainActivity::class.java)
+                //intent.putExtra("lat",it.latitude.toString())
+                //intent.putExtra("long",it.longitude.toString())
+               // startActivity(intent)
             }
         }
 
@@ -163,6 +177,7 @@ class MainActivity : AppCompatActivity() {
                 response =
                     URL("https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&appid=$API")
                         .readText(Charsets.UTF_8)
+                //URL("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$API")
             } catch (e: Exception) {
                 response = null
             }
