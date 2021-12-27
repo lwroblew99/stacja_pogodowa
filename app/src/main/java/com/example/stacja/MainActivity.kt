@@ -79,6 +79,9 @@ class MainActivity : AppCompatActivity() {
         tvCisnienie = findViewById(R.id.pressure)
         tvTemperature = findViewById(R.id.temp_inside)
 
+        firebasedatabase()
+        weather().execute()
+
         swipeRefreshLayout.setOnRefreshListener {
 
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
