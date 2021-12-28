@@ -57,9 +57,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTime: TextView
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private var currentLocation: Location? = null
 
 
-    var city: String = "Sopot"
+    var city: String = "Poznan"
     val API: String = "538641b64c380fbc31725377e486d0c1"
     val useruid: String ="X3hgaV4OrMfYSMh0HjkWEkncAN13"
     val webApi:String = "AIzaSyBUNk2SUBSJx78jNwUUKikIUP8udhFBYj0"
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         swipeRefreshLayout = findViewById(R.id.swiperefresh)
         tvCisnienie = findViewById(R.id.pressure)
         tvTemperature = findViewById(R.id.temp_inside)
+
 
         firebasedatabase()
         weather().execute()
@@ -121,6 +123,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
+                Log.i(localClassName,"database error")
             }
         })
     }
@@ -140,13 +143,15 @@ class MainActivity : AppCompatActivity() {
         }
         task.addOnSuccessListener {
             if(it != null){
+                currentLocation = it
                //val lat = it.latitude.toString()
                //val long = it.longitude.toString()
-               Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
+               //Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
                 //val intent= Intent(this,MainActivity::class.java)
                 //intent.putExtra("lat",it.latitude.toString())
                 //intent.putExtra("long",it.longitude.toString())
-               // startActivity(intent)
+                // startActivity(intent)
+                //finish()
             }
         }
 
@@ -176,15 +181,19 @@ class MainActivity : AppCompatActivity() {
         override fun doInBackground(vararg p0: String?): String? {
             var response: String?
             var image: String?
-            try {
-                response =
+            response = try {
+                if(currentLocation != null)
+                    URL("https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation?.latitude}&lon=${currentLocation?.longitude}&appid=$API")
+                        .readText(Charsets.UTF_8)
+                else
                     URL("https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&appid=$API")
                         .readText(Charsets.UTF_8)
-                //URL("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$long&appid=$API")
             } catch (e: Exception) {
-                response = null
+                null
             }
             return response
+
+
 
 
         }
