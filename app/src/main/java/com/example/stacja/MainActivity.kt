@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvCisnienie: TextView
     private lateinit var tvDate: TextView
     private lateinit var tvTime: TextView
+    private lateinit var tvJakosc: TextView
+    private lateinit var tvWilgotnosc: TextView
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private var currentLocation: Location? = null
@@ -77,20 +79,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         swipeRefreshLayout = findViewById(R.id.swiperefresh)
-        tvCisnienie = findViewById(R.id.pressure)
-        tvTemperature = findViewById(R.id.temp_inside)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-
+        checkLocationPermission()
         firebasedatabase()
         weather().execute()
 
         swipeRefreshLayout.setOnRefreshListener {
 
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-           // findViewById<Button>(R.id.bgetlocation).setOnClickListener {
-             //   checkLocationPermission()
-            //}
+
             checkLocationPermission()
             firebasedatabase()
             weather().execute()
@@ -104,7 +102,7 @@ class MainActivity : AppCompatActivity() {
 
     fun firebasedatabase(){
         val database =
-            Firebase.database("https://pogodynka-979e7-default-rtdb.europe-west1.firebasedatabase.app")
+            Firebase.database("https://esp-firebase-demo-a3e9b-default-rtdb.europe-west1.firebasedatabase.app")
         val myRef = database.getReference()
 
         myRef.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -116,8 +114,18 @@ class MainActivity : AppCompatActivity() {
                     dataSnapshot.child("Weather1").child("Cisnienie").value.toString()
                 val Temperatura: String =
                     dataSnapshot.child("Weather1").child("Temperatura").value.toString()
+                val Jakosc: String =
+                    dataSnapshot.child("Weather1").child("Jakosc").value.toString()
+                val Wilgotnosc: String =
+                    dataSnapshot.child("Weather1").child("Wilgotnosc").value.toString()
+                tvCisnienie = findViewById(R.id.pressure)
+                tvTemperature = findViewById(R.id.temp_inside)
+                tvJakosc = findViewById(R.id.air_quality)
+                tvWilgotnosc = findViewById(R.id.humidity)
                 tvCisnienie.setText(Cisnienie)
                 tvTemperature.setText(Temperatura)
+                tvJakosc.setText(Jakosc)
+                tvWilgotnosc.setText(Wilgotnosc)
 
             }
 
@@ -144,14 +152,7 @@ class MainActivity : AppCompatActivity() {
         task.addOnSuccessListener {
             if(it != null){
                 currentLocation = it
-               //val lat = it.latitude.toString()
-               //val long = it.longitude.toString()
-               //Toast.makeText(applicationContext, "${it.latitude} ${it.longitude}", Toast.LENGTH_SHORT).show()
-                //val intent= Intent(this,MainActivity::class.java)
-                //intent.putExtra("lat",it.latitude.toString())
-                //intent.putExtra("long",it.longitude.toString())
-                // startActivity(intent)
-                //finish()
+
             }
         }
 
@@ -192,10 +193,6 @@ class MainActivity : AppCompatActivity() {
                 null
             }
             return response
-
-
-
-
         }
 
         override fun onPostExecute(result: String?) {
@@ -237,9 +234,7 @@ class MainActivity : AppCompatActivity() {
                 val iconUrl = "https://openweathermap.org/img/w/"+icon+".png"
                 val imageView: ImageView = findViewById(R.id.image)
 
-
                 Picasso.get().load(iconUrl).into(imageView)
-
 
                 val currentTime = LocalDateTime.now()
                 val formaterr = DateTimeFormatter.ofPattern("HH:mm")
@@ -248,7 +243,7 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.TCity).text = address
                 findViewById<TextView>(R.id.temp_outside).text = temp
                 //findViewById<TextView>(R.id.pressure).text = pressure
-                findViewById<TextView>(R.id.humidity).text = humidity
+                //findViewById<TextView>(R.id.humidity).text = humidity
                 findViewById<TextView>(R.id.wind).text = windspeed
                 findViewById<TextView>(R.id.data).text = updatedAtDate
                 findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
