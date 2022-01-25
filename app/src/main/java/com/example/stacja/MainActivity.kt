@@ -111,13 +111,13 @@ class MainActivity : AppCompatActivity() {
                 // whenever data at this location is updated.
 
                 val Cisnienie: String =
-                    dataSnapshot.child("Weather1").child("Cisnienie").value.toString()
+                    dataSnapshot.child("Weather_now").child("Cisnienie").value.toString()
                 val Temperatura: String =
-                    dataSnapshot.child("Weather1").child("Temperatura").value.toString()
+                    dataSnapshot.child("Weather_now").child("Temperatura").value.toString()
                 val Jakosc: String =
-                    dataSnapshot.child("Weather1").child("Jakosc").value.toString()
+                    dataSnapshot.child("Weather_now").child("Jakosc").value.toString()
                 val Wilgotnosc: String =
-                    dataSnapshot.child("Weather1").child("Wilgotnosc").value.toString()
+                    dataSnapshot.child("Weather_now").child("Wilgotnosc").value.toString()
                 tvCisnienie = findViewById(R.id.pressure)
                 tvTemperature = findViewById(R.id.temp_inside)
                 tvJakosc = findViewById(R.id.air_quality)
