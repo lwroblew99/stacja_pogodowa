@@ -315,7 +315,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/ic_baseline_sunny"
+                        android:src="@drawable/ic_baseline_filter_air"
                         app:tint="#FFF"></ImageView>
 
                     <TextView
@@ -352,7 +352,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/ic_baseline_sunny"
+                        android:src="@drawable/ic_baseline_airquality"
                         app:tint="#FFF"></ImageView>
 
                     <Space

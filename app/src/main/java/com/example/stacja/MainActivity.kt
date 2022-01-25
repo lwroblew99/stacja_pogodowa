@@ -152,8 +152,8 @@ class MainActivity : AppCompatActivity() {
         task.addOnSuccessListener {
             if(it != null){
                 currentLocation = it
-
             }
+            else { Toast.makeText(this, "Brak dostępu do lokalizacji", Toast.LENGTH_SHORT).show()}
         }
 
 
