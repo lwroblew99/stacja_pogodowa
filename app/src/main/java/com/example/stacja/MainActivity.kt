@@ -109,7 +109,6 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-
                 val Cisnienie: String =
                     dataSnapshot.child("Weather_now").child("Cisnienie").value.toString()
                 val Temperatura: String =
@@ -128,7 +127,6 @@ class MainActivity : AppCompatActivity() {
                 tvWilgotnosc.setText(Wilgotnosc)
 
             }
-
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
                 Log.i(localClassName,"database error")
@@ -184,7 +182,8 @@ class MainActivity : AppCompatActivity() {
             var image: String?
             response = try {
                 if(currentLocation != null)
-                    URL("https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation?.latitude}&lon=${currentLocation?.longitude}&appid=$API")
+                    URL("https://api.openweathermap.org/data/2.5/weather?lat=${currentLocation?.latitude}"
+                            + "&lon=${currentLocation?.longitude}&appid=$API")
                         .readText(Charsets.UTF_8)
                 else
                     URL("https://api.openweathermap.org/data/2.5/weather?q=$city&units=metric&appid=$API")
